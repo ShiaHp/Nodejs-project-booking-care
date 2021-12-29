@@ -68,6 +68,9 @@ let putCRUD = async (req, res)=> {
  
   
 }
+let something = ()=>{
+
+}
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
@@ -76,4 +79,5 @@ module.exports = {
     displayGetCRUD:displayGetCRUD,
     getEditCRUD:getEditCRUD,
     putCRUD:putCRUD,
+    something:something,
 }
