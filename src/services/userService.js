@@ -200,7 +200,7 @@ let createNewUser =  async (data) => {
 // 
 let deleteUser = (userId)=>{
     return new Promise(async (resolve, reject)=>{
-                 
+               
      let foundUser = await db.User.findOne({
             where: {id:userId}
         })
@@ -208,11 +208,11 @@ let deleteUser = (userId)=>{
         if(!foundUser ){
             resolve({
                 errCode:2,
-                errMessage:'The user is not exist '
+                errMessage:`The user isn't exit`
             })
         }
         
-            await foundUser.destroy({
+            await db.User.destroy({
                 where: {id:userId}
             })
         
