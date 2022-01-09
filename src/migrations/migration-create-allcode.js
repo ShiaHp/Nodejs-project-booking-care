@@ -13,7 +13,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      key: {
+      keyMap: {
         type: Sequelize.STRING
       },
       type: {
@@ -25,8 +25,7 @@ module.exports = {
       valueVi: {
         type: Sequelize.STRING
       },
-     
-
+    
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
