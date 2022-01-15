@@ -1,6 +1,6 @@
 import db from '../models/index';
 import bcrypt from 'bcryptjs';
-
+import _ from 'lodash'
 require('dotenv').config();
 const MAX_NUMBER_SCHEDULE  = process.env.MAX_NUMBER_SCHEDULE ;
 let getTopDoctorHome = (limitInput) => {
@@ -149,7 +149,7 @@ let getDetailDoctorById = (inputData) =>{
     let  bulkCreateSchedule =(data) => {
      return new Promise( async (resolve, reject) => {
             try{
-                if(!data.arrSchedule || !data.doctorId || !data.formattedDate)
+                if(!data.arrSchedule || !data.doctorId || !data.formatedDate)
                 {
                     resolve({
                         errCode : 1,
@@ -165,7 +165,7 @@ let getDetailDoctorById = (inputData) =>{
                     }
 
                 let existing = await db.Schedule.findAll({
-                    where: { doctorId : data.doctorId ,date: data.formattedDate},
+                    where: { doctorId : data.doctorId ,date: data.formatedDate},
                     attributes: ['timeType','date','doctorId','maxNumber'],
                     raw: true,
 
@@ -183,7 +183,7 @@ let getDetailDoctorById = (inputData) =>{
 
                     // compare different 
 
-                        let toCreate = _.differentWith(schedule,existing,(a,b) =>{
+                        let toCreate = _.differenceWith(schedule,existing,(a,b) =>{
                             return a.timeType === b.timeType & a.date === b.date
                         })
 
@@ -202,6 +202,31 @@ let getDetailDoctorById = (inputData) =>{
             }
 })
 }
+let getScheduleByDate = (doctorId,date) => {
+    return new Promise( async (resolve, reject) => {
+        try{
+            if(!doctorId|| !date){
+                resolve({
+                    errCode : 1,
+                    errMessage : ' Missing required parameter '
+                })
+            } else{
+                let dataSchedule = await db.Schedule.findAll({
+                    where : 
+                    { doctorId  : doctorId , date:date }
+                })
+                if(!dataSchedule) dataSchedule = [];
+                resolve({
+                    errCode: 0,
+                    data : dataSchedule
+                })
+            }
+       
+        } catch(e){
+            reject(e);
+        }
+    })
+}
 module.exports =
 {
     getTopDoctorHome:getTopDoctorHome,
@@ -210,4 +235,5 @@ module.exports =
     // key value 
     getDetailDoctorById:getDetailDoctorById,
     bulkCreateSchedule:bulkCreateSchedule,
+    getScheduleByDate:getScheduleByDate
 }
