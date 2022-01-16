@@ -7,8 +7,7 @@ module.exports = {
         // maxNumber: DataTypes.INTEGER,
         // date: DataTypes.DATE,
         // timeType: DataTypes.STRING,
-        // doctorId: DataTypes.INTEGER,
-       
+        // doctorId: DataTypes.INTEGER,     
       id: {
         allowNull: false,
         autoIncrement: true,
