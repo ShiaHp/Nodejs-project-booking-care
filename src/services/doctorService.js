@@ -170,23 +170,25 @@ let getDetailDoctorById = (inputData) =>{
                     raw: true,
 
                 })
-                    // 
+                    // console.log('check existing',existing)
+                    // console.log('check create :' ,schedule)
                     
                 
-// convert date
-                    if(existing && existing.length >0){
-                        existing = existing.map(item =>{
-                            item.date = new Date(item.date).getTime()
-                            return item
-                        })
-                    }
+                    // convert date
+                    // if(existing && existing.length >0){
+                    //     existing = existing.map(item =>{
+                    //         item.date = new Date(item.date).getTime()
+                    //         return item
+                    //     })
+                    // }
 
                     // compare different 
 
                         let toCreate = _.differenceWith(schedule,existing,(a,b) =>{
-                            return a.timeType === b.timeType & a.date === b.date
+                            return a.timeType === b.timeType & +a.date === +b.date
                         })
-
+                // a = '5'
+                // b  = +a =>b =5 
                         // create data 
                         if(toCreate && toCreate.length >0){
                             await db.Schedule.bulkCreate(toCreate);
@@ -213,8 +215,16 @@ let getScheduleByDate = (doctorId,date) => {
             } else{
                 let dataSchedule = await db.Schedule.findAll({
                     where : 
-                    { doctorId  : doctorId , date:date }
+                    { doctorId  : doctorId 
+                         , date:date },
+                 include : [
+                       
+                      {model:db.Allcode, as : 'timeTypeData',attributes:['valueEn','valueVi']},                                         
+                        ],
+                        raw: true,
+                        nest :true,
                 })
+            
                 if(!dataSchedule) dataSchedule = [];
                 resolve({
                     errCode: 0,
