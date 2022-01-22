@@ -25,6 +25,9 @@ module.exports = {
       timeType: {
         type: Sequelize.STRING
       },
+      token : {
+        type : Sequelize.STRING
+      },
      
 
       createdAt: {

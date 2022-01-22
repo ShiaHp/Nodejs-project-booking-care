@@ -5,21 +5,25 @@ import emailService from './emailService'
 let postBookAppointment = (data) => {
     return new Promise( async (resolve, reject) => {
         try {
-                if(!data.email || !data.doctorId || !data.date || !data.timeType) {
+                if(!data.email || !data.doctorId || !data.date || !data.timeType  || !data.fullName) {
                     resolve({
                         errCode : 1,
                         errMessage : 'Missing required parameter'
                     })
                 } else {
+                      
 
                     await emailService.sendSimpleEmail({
                         receiverEmail : data.email,
-                        patientName : "Shia",
-                        time: '8 - 9',
-                        doctorName : "Shia",
+                        patientName : data.fullName,
+                        time: data.timeString,
+                        doctorName : data.doctorName,
+                        language : data.language,
                         redirectLink : 'https://www.youtube.com/watch?v=ExYvqpziqgg&list=RDExYvqpziqgg&start_radio=1'
-                    })
+                    }) 
 
+
+                        // upsert
                 let user =  await db.User.findOrCreate({
                         where : {email : data.email},
                         defaults :{
