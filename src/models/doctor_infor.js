@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
  
   Doctor_Infor.init({  
    doctorId: DataTypes.INTEGER,
+   specialtyId: DataTypes.INTEGER,
+   clinicId : DataTypes.INTEGER,
    priceId: DataTypes.STRING,
    provinceId: DataTypes.STRING,
    paymentId : DataTypes.STRING,
@@ -28,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
    nameClinic: DataTypes.STRING,
    note : DataTypes.STRING,
    count : DataTypes.INTEGER,
+
   }, {
     sequelize,
     modelName: 'Doctor_Infor',
