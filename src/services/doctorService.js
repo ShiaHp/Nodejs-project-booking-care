@@ -415,7 +415,12 @@ let getListPatientForDoctor  = (doctorId,date) =>{
                     include : [{model:db.Allcode,as : 'genderData',attributes:['valueEn','valueVi']}]
                     },
                     //    mối quan hệ giữa User và Allcode 
-                    ],
+
+                    {
+                        model:db.Allcode , as : 'timeTypeDataPatient' ,attributes:['valueEn','valueVi']
+                    }
+                ],
+                    
                     raw: true,
                     nest:true,
                 })
